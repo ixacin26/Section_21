@@ -9,36 +9,27 @@ import requests
 character = input("Choose a character from the Pokemon-universe: ")
 
 req = requests.get(f"https://pokeapi.co/api/v2/pokemon/{character}")
-charac = req.json()
-abilities = charac["abilities"]
-print(abilities[0]["ability"]["name"])
 
+if req.status_code == 200:
+    charac = req.json()
+    abilities = charac["abilities"]
+        
+    print(f"\nThe name of the chosen character ist {charac["name"].capitalize()}")
+    print(f"The height of {charac["name"].capitalize()} is {charac["height"]}")
+    print(f"The weight of {charac["name"].capitalize()} is {charac["weight"]}")
+    print(f"{charac["name"].capitalize()} has the following abilities:")
 
-print(f"Data-type of charac: {type(charac)}")
-# print(charac)
+    # Using nested loops - got help from ChatGPT ;-)
+    for ability in abilities:
+        for key, value in ability.items():
+            if isinstance(value, dict):
+                for nested_key, nested_value in value.items():
+                    print(f"   {nested_key}: {nested_value}")
+            else:
+                print(f"   {key}: {value}")
+        print()
+else:
+    print("No such character in Pokemon-Universe!")
 
-
-print(f"The name of the chosen character ist {charac["name"].capitalize()}")
-print(f"The height of {charac["name"].capitalize()} is {charac["height"]}")
-print(f"The weight of {charac["name"].capitalize()} is {charac["weight"]}")
-print(f"{charac["name"].capitalize()} has the following abilities: {charac["abilities"]}")
-# print(f"Data-type of Abilities: {type(abilities)}")
-# print(abilities)
-# print(abilities[1])
-
-# try:
-#     print(respone.json())
-# except:
-#     print(charac)
-
-# for i in charac:
-#     print(charac[i].keys())
-
-
-# for i in charac:
-    # print(charac[i].keys())
-    # print(charac[i])
-
-# print(charac["weight"])
 
 
