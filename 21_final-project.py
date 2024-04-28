@@ -6,8 +6,7 @@
 ############################################################
 import requests
 
-character = input("Choose a character from the Pokemon-universe: ")
-
+character = input("Choose a character from the Pokemon-universe: ").lower()
 req = requests.get(f"https://pokeapi.co/api/v2/pokemon/{character}")
 
 if req.status_code == 200:
